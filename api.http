@@ -1,0 +1,60 @@
+@url = http://localhost:5159/api/v1/posts
+
+@user1 = 1
+@token1 = MTExMTExMTExMQ==
+@user2 = 2
+@token2 = MjIyMjIyMjIyMg==
+
+
+@invalid = OTk5OTk5OTk5OQ==
+
+###
+# @name newPost
+POST {{url}}
+Authorization: Basic {{token1}}
+Content-Type: application/json
+
+{
+    "postUserId": {{user1}},
+    "postBody": "Nytt Innlegg av Bruker En"
+}
+
+###
+@newPostId = {{newPost.response.body.$.postId}}
+
+###
+GET {{url}}
+
+###
+GET {{url}}/{{newPostId}}
+
+###
+PUT {{url}}/edit
+Authorization: Basic {{token1}}
+Content-Type: application/json
+
+{
+    "postId": {{newPostId}},
+    "postUserId": {{user1}},
+    "postBody": "En Endring......... :^)"
+}
+
+###
+PUT {{url}}/edit
+Authorization: Basic {{token2}}
+Content-Type: application/json
+
+{
+    "postId": {{newPostId}},
+    "postUserId": {{user1}},
+    "postBody": ":^)"
+}
+
+###
+DELETE {{url}}/delete/{{newPostId}}
+Authorization: Basic {{token1}}
+
+###
+DELETE {{url}}/delete/1
+Authorization: Basic {{token2}}
+
