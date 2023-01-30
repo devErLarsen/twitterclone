@@ -1,9 +1,23 @@
-version: "3.9"
+# version: "3.9"
 services:
-  db:
-    image: "mcr.microsoft.com/mssql/server"
+  api:
+    image: web_api
+    container_name: web_api_application
+    build:
+      context: ./Api
+      dockerfile: Dockerfile
     ports:
-      - "1433:1433"
+      - "5000:80"
     environment:
-      MSSQL_SA_PASSWORD: "Password123!"
-      ACCEPT_EULA: "Y"
+      - ASPNETCORE_ENVIRONMENT=docker
+    depends_on:
+      - db
+  db:
+    image: postgres
+    restart: always
+    environment:
+      POSTGRES_PASSWORD: Postgres123
+    volumes:
+      - ./Api/Data/TwitterCloneDB.sql:/docker-entrypoint-initdb.d/initdb.sql
+    ports:
+      - "5432:5432"

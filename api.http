@@ -1,4 +1,4 @@
-@url = http://localhost:5159/api/v1/posts
+@url = http://localhost:5000/api/v1/posts
 
 @user1 = 1
 @token1 = MTExMTExMTExMQ==

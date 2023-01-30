@@ -1,6 +1,6 @@
 using System.Text;
 using Api.Data;
-using Api.Models;
+using Api.Entities;
 using Microsoft.EntityFrameworkCore;
 
 namespace Api;
@@ -9,7 +9,7 @@ public class TokenValidationService : ITokenValidationService
 {
     private readonly DbSet<User> _users;
 
-    public TokenValidationService(ApiDbContext context)
+    public TokenValidationService(TwitterCloneDbContext context)
     {
         _users = context.Users;
     }
